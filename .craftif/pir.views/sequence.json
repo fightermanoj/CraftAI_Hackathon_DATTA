@@ -1,0 +1,324 @@
+{
+  "schema_version": "1.0.0",
+  "view": "sequence",
+  "revision": "00e39d3d0c9f23d022f7abf175011b30",
+  "graph_version": 4,
+  "generated_at_ms": 1786188809678,
+  "graph": {
+    "schema_version": 1,
+    "id": "pir_air_mouse-sequence",
+    "name": "air_mouse topology — Sequence",
+    "description": "Execution and initialization order",
+    "nodes": [
+      {
+        "id": "boot",
+        "node_type": "system_init",
+        "label": "1. Boot / app_main",
+        "description": "Bootstraps firmware startup and initializes core subsystems.",
+        "ports": [
+          {
+            "id": "boot::in",
+            "name": "in",
+            "direction": "input",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "boot::out",
+            "name": "out",
+            "direction": "output",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "target": "esp32s3"
+        },
+        "execution": {},
+        "visual": {
+          "x": 0.0,
+          "y": 80.0,
+          "layer": 0
+        }
+      },
+      {
+        "id": "app_task",
+        "node_type": "rtos_task",
+        "label": "2. Task app_task",
+        "description": "Executes RTOS loop logic for app_task.",
+        "ports": [
+          {
+            "id": "app_task::in",
+            "name": "in",
+            "direction": "input",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "app_task::out",
+            "name": "out",
+            "direction": "output",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "task_name": "app_task",
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 25.0
+        },
+        "execution": {
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 25.0
+        },
+        "visual": {
+          "x": 320.0,
+          "y": 80.0,
+          "layer": 1
+        }
+      },
+      {
+        "id": "motion",
+        "node_type": "rtos_task",
+        "label": "3. Task motion",
+        "description": "Executes RTOS loop logic for motion.",
+        "ports": [
+          {
+            "id": "motion::in",
+            "name": "in",
+            "direction": "input",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "motion::out",
+            "name": "out",
+            "direction": "output",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "task_name": "motion",
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 0.0
+        },
+        "execution": {
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 0.0
+        },
+        "visual": {
+          "x": 640.0,
+          "y": 80.0,
+          "layer": 2
+        }
+      },
+      {
+        "id": "storage_manager",
+        "node_type": "storage_manager",
+        "label": "4. Storage Manager",
+        "description": "Persists runtime state and configuration data.",
+        "ports": [
+          {
+            "id": "storage_manager::in",
+            "name": "in",
+            "direction": "input",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "storage_manager::out",
+            "name": "out",
+            "direction": "output",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "backend": "nvs",
+          "namespace": "app"
+        },
+        "execution": {},
+        "visual": {
+          "x": 960.0,
+          "y": 80.0,
+          "layer": 3
+        }
+      },
+      {
+        "id": "logger",
+        "node_type": "logger",
+        "label": "5. Logger",
+        "description": "Emits structured runtime logs for diagnostics.",
+        "ports": [
+          {
+            "id": "logger::in",
+            "name": "in",
+            "direction": "input",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "logger::out",
+            "name": "out",
+            "direction": "output",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "tag": "APP",
+          "level": "info"
+        },
+        "execution": {},
+        "visual": {
+          "x": 1280.0,
+          "y": 80.0,
+          "layer": 4
+        }
+      },
+      {
+        "id": "_i2c",
+        "node_type": "i2c_device",
+        "label": "6. APP I2C Device",
+        "description": "Represents an I2C peripheral with mapped bus pins.",
+        "ports": [
+          {
+            "id": "_i2c::in",
+            "name": "in",
+            "direction": "input",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "_i2c::out",
+            "name": "out",
+            "direction": "output",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "sda_pin": 21,
+          "scl_pin": 22,
+          "address": "0x68",
+          "clock_hz": 400000
+        },
+        "execution": {},
+        "visual": {
+          "x": 1600.0,
+          "y": 80.0,
+          "layer": 5
+        }
+      },
+      {
+        "id": "ble_manager",
+        "node_type": "ble_manager",
+        "label": "7. BLE",
+        "description": "Manages BLE advertising, connections, and data flow.",
+        "ports": [
+          {
+            "id": "ble_manager::in",
+            "name": "in",
+            "direction": "input",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "ble_manager::out",
+            "name": "out",
+            "direction": "output",
+            "datatype": "any",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "device_name": "ESP32-BLE",
+          "role": "peripheral"
+        },
+        "execution": {},
+        "visual": {
+          "x": 1920.0,
+          "y": 80.0,
+          "layer": 6
+        }
+      }
+    ],
+    "connections": [
+      [
+        "boot::out",
+        "app_task::in"
+      ],
+      [
+        "boot::out",
+        "motion::in"
+      ],
+      [
+        "boot::out",
+        "storage_manager::in"
+      ],
+      [
+        "boot::out",
+        "logger::in"
+      ],
+      [
+        "boot::out",
+        "_i2c::in"
+      ],
+      [
+        "boot::out",
+        "ble_manager::in"
+      ],
+      [
+        "app_task::out",
+        "storage_manager::in"
+      ],
+      [
+        "app_task::out",
+        "logger::in"
+      ],
+      [
+        "app_task::out",
+        "_i2c::in"
+      ],
+      [
+        "app_task::out",
+        "ble_manager::in"
+      ],
+      [
+        "ble_manager::out",
+        "app_task::in"
+      ],
+      [
+        "ble_manager::out",
+        "motion::in"
+      ]
+    ],
+    "layout": {
+      "orientation": "horizontal",
+      "node_width": 0.0,
+      "layer_gap": 0.0,
+      "node_gap": 0.0
+    }
+  },
+  "mermaid": "sequenceDiagram\n    participant boot as 1. Boot / app_main\n    participant app_task as 2. Task app_task\n    participant motion as 3. Task motion\n    participant storage_manager as 4. Storage Manager\n    participant logger as 5. Logger\n    participant _i2c as 6. APP I2C Device\n    participant ble_manager as 7. BLE\n    boot->>app_task: spawns\n    boot->>motion: spawns\n    boot->>storage_manager: initializes\n    boot->>logger: initializes\n    boot->>_i2c: initializes\n    boot->>ble_manager: initializes\n    app_task->>storage_manager: data_flow\n    app_task->>logger: data_flow\n    app_task->>_i2c: data_flow\n    app_task->>ble_manager: data_flow\n    ble_manager->>app_task: triggers\n    ble_manager->>motion: triggers",
+  "title": "Sequence Diagram"
+}

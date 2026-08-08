@@ -1,0 +1,1326 @@
+{
+  "schema_version": "2.0.0",
+  "id": "pir_air_mouse",
+  "revision": "2808005266f9f11a217111f71d89df09",
+  "provenance": {
+    "project_path": "F:\\firgen_craftai\\new_project\\datta\\air_mouse",
+    "chat_id": "a44c086f-50f6-4eae-adf4-6c16c59361a6",
+    "revision": "2808005266f9f11a217111f71d89df09",
+    "generated_at_ms": 1786183916020,
+    "analyzer_version": "pir_maker-static-0.2.0",
+    "analyzed_files": [
+      "CMakeLists.txt",
+      "firmware/app/app.c",
+      "firmware/app/app.h",
+      "firmware/configs/app_config.h",
+      "firmware/configs/build_config.h",
+      "firmware/configs/platform_config.h",
+      "firmware/interfaces/motion_sensor_if.h",
+      "firmware/interfaces/mouse_output_if.h",
+      "firmware/platforms/esp32/ble_mouse.c",
+      "firmware/platforms/esp32/mpu6050.c",
+      "firmware/utils/helpers/helpers.c",
+      "firmware/utils/helpers/helpers.h",
+      "firmware/utils/logger/logger.c",
+      "firmware/utils/logger/logger.h",
+      "main/CMakeLists.txt",
+      "main/entry.c",
+      "main/firmgen_sources.cmake",
+      "sdkconfig",
+      "sdkconfig.defaults"
+    ],
+    "file_hashes": {
+      "firmware/configs/build_config.h": "dd997e9a0a461df28c370a61963fd7e5",
+      "firmware/utils/helpers/helpers.c": "914568ab7415fec17e74f306cbb5ae09",
+      "sdkconfig.defaults": "c30560e2b1487df145b38e782be2a243",
+      "firmware/app/app.c": "6de318e73f38c75aa291216cc7c0b9cc",
+      "CMakeLists.txt": "b04a7cfc5e707b14e5590848de0b286e",
+      "firmware/interfaces/motion_sensor_if.h": "d44456327a7e5f061bbdf631b6806974",
+      "firmware/app/app.h": "bc88844840b4c743283b026f851e00f0",
+      "firmware/platforms/esp32/ble_mouse.c": "3f07dfb60c18646e01927a7b9f0019c8",
+      "firmware/interfaces/mouse_output_if.h": "44996c21d8f06fcaab8415322baaecbe",
+      "firmware/configs/app_config.h": "d25b6f832fb5cd00b5b25106ecb8e00c",
+      "main/firmgen_sources.cmake": "d0d7775936bf3dd66156bb29aaadaca4",
+      "firmware/platforms/esp32/mpu6050.c": "a79f40dcaf2d52095dcf42a1881bd429",
+      "sdkconfig": "08a24c9c8f6654f85acea6829ddd3ff2",
+      "firmware/utils/logger/logger.c": "8e992fef35c9a4678ec38e60902d741d",
+      "main/entry.c": "86aaa3bc61772628c601798f4d9dea56",
+      "main/CMakeLists.txt": "0270a2eabf62ffbebb578ae1ec286d6c",
+      "firmware/configs/platform_config.h": "010b01144dbd2d3fb63f3053b158ab7a",
+      "firmware/utils/helpers/helpers.h": "ec8b635b7e5b55f8aeb8f47c3ff34312",
+      "firmware/utils/logger/logger.h": "2c284c641c88c6a4fff52db62e8d1ea5"
+    }
+  },
+  "approval": {
+    "status": "pending"
+  },
+  "nodes": [
+    {
+      "id": "boot",
+      "node_type": "system_init",
+      "label": "Boot / app_main",
+      "properties": {
+        "target": "esp32s3"
+      },
+      "source_refs": [
+        {
+          "file": "main/entry.c",
+          "confidence": 1.0,
+          "inferred_by": "static"
+        }
+      ],
+      "sync": {
+        "state": "synced",
+        "last_synced_revision": "2808005266f9f11a217111f71d89df09"
+      },
+      "ownership": {
+        "primary_files": [
+          "main/entry.c"
+        ]
+      },
+      "editable_fields": [
+        "target"
+      ],
+      "layer": "system",
+      "ai_summary": "Bootstraps firmware startup and initializes core subsystems.",
+      "confidence": 1.0,
+      "authority": "agent",
+      "semantic_tags": [],
+      "dependencies": []
+    },
+    {
+      "id": "status_led_gpio",
+      "node_type": "gpio_output",
+      "label": "STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)",
+      "properties": {
+        "pin": 48
+      },
+      "source_refs": [
+        {
+          "file": "firmware/configs/app_config.h",
+          "confidence": 1.0,
+          "inferred_by": "static"
+        }
+      ],
+      "sync": {
+        "state": "synced",
+        "last_synced_revision": "2808005266f9f11a217111f71d89df09"
+      },
+      "ownership": {
+        "primary_files": [
+          "firmware/configs/app_config.h"
+        ]
+      },
+      "editable_fields": [
+        "pin"
+      ],
+      "layer": "physical",
+      "ai_summary": "Drives GPIO 48 as an output signal.",
+      "confidence": 1.0,
+      "authority": "agent",
+      "semantic_tags": [],
+      "dependencies": []
+    },
+    {
+      "id": "app_task",
+      "node_type": "rtos_task",
+      "label": "Task app_task",
+      "properties": {
+        "task_name": "app_task",
+        "priority": 5,
+        "stack_size": 4096,
+        "period_ms": 10.0
+      },
+      "source_refs": [
+        {
+          "file": "firmware/configs/app_config.h",
+          "confidence": 1.0,
+          "inferred_by": "static"
+        }
+      ],
+      "sync": {
+        "state": "synced",
+        "last_synced_revision": "2808005266f9f11a217111f71d89df09"
+      },
+      "ownership": {
+        "primary_files": [
+          "firmware/configs/app_config.h"
+        ]
+      },
+      "editable_fields": [
+        "task_name",
+        "priority",
+        "stack_size",
+        "period_ms"
+      ],
+      "layer": "runtime",
+      "ai_summary": "Executes RTOS loop logic for app_task.",
+      "confidence": 1.0,
+      "authority": "agent",
+      "semantic_tags": [],
+      "dependencies": []
+    },
+    {
+      "id": "logger",
+      "node_type": "logger",
+      "label": "Logger",
+      "properties": {
+        "tag": "APP",
+        "level": "info"
+      },
+      "source_refs": [
+        {
+          "file": "firmware/app/app.c",
+          "confidence": 1.0,
+          "inferred_by": "static"
+        }
+      ],
+      "sync": {
+        "state": "synced",
+        "last_synced_revision": "2808005266f9f11a217111f71d89df09"
+      },
+      "ownership": {
+        "primary_files": [
+          "firmware/app/app.c"
+        ]
+      },
+      "editable_fields": [
+        "tag",
+        "level"
+      ],
+      "layer": "system",
+      "ai_summary": "Emits structured runtime logs for diagnostics.",
+      "confidence": 1.0,
+      "authority": "agent",
+      "semantic_tags": [],
+      "dependencies": []
+    },
+    {
+      "id": "_i2c",
+      "node_type": "i2c_device",
+      "label": "APP I2C Device",
+      "properties": {
+        "sda_pin": 4,
+        "scl_pin": 5,
+        "address": "0x68",
+        "clock_hz": 400000,
+        "pin_bindings": {
+          "sda": 4,
+          "scl": 5
+        }
+      },
+      "source_refs": [
+        {
+          "file": "firmware/configs/app_config.h",
+          "confidence": 1.0,
+          "inferred_by": "static"
+        }
+      ],
+      "sync": {
+        "state": "synced",
+        "last_synced_revision": "2808005266f9f11a217111f71d89df09"
+      },
+      "ownership": {
+        "primary_files": [
+          "firmware/configs/app_config.h"
+        ]
+      },
+      "editable_fields": [
+        "sda_pin",
+        "scl_pin",
+        "address",
+        "clock_hz"
+      ],
+      "layer": "physical",
+      "ai_summary": "Represents an I2C peripheral with mapped bus pins.",
+      "confidence": 1.0,
+      "authority": "agent",
+      "semantic_tags": [],
+      "dependencies": []
+    },
+    {
+      "id": "ble_manager",
+      "node_type": "ble_manager",
+      "label": "BLE",
+      "properties": {
+        "device_name": "ESP32-BLE",
+        "role": "peripheral"
+      },
+      "source_refs": [
+        {
+          "file": "firmware/platforms/esp32/ble_mouse.c",
+          "confidence": 1.0,
+          "inferred_by": "static"
+        }
+      ],
+      "sync": {
+        "state": "synced",
+        "last_synced_revision": "2808005266f9f11a217111f71d89df09"
+      },
+      "ownership": {
+        "primary_files": [
+          "firmware/platforms/esp32/ble_mouse.c"
+        ]
+      },
+      "editable_fields": [
+        "device_name",
+        "role"
+      ],
+      "layer": "network",
+      "ai_summary": "Manages BLE advertising, connections, and data flow.",
+      "confidence": 1.0,
+      "authority": "agent",
+      "semantic_tags": [],
+      "dependencies": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_boot_app_task",
+      "source_node_id": "boot",
+      "target_node_id": "app_task",
+      "source_port_id": "boot_boot_out_0",
+      "target_port_id": "app_task_exec_in_0",
+      "kind": "execution",
+      "confidence": 0.9,
+      "source_refs": [],
+      "semantic_label": "spawns",
+      "validated": false
+    },
+    {
+      "id": "e_boot_logger",
+      "source_node_id": "boot",
+      "target_node_id": "logger",
+      "source_port_id": "boot_boot_out_0",
+      "target_port_id": "logger_exec_in_1",
+      "kind": "execution",
+      "confidence": 0.9,
+      "source_refs": [],
+      "semantic_label": "initializes",
+      "validated": false
+    },
+    {
+      "id": "e_boot__i2c",
+      "source_node_id": "boot",
+      "target_node_id": "_i2c",
+      "source_port_id": "boot_boot_out_0",
+      "target_port_id": "_i2c_exec_in_0",
+      "kind": "execution",
+      "confidence": 0.9,
+      "source_refs": [],
+      "semantic_label": "initializes",
+      "validated": false
+    },
+    {
+      "id": "e_boot_ble_manager",
+      "source_node_id": "boot",
+      "target_node_id": "ble_manager",
+      "source_port_id": "boot_boot_out_0",
+      "target_port_id": "ble_manager_exec_in_0",
+      "kind": "execution",
+      "confidence": 0.9,
+      "source_refs": [],
+      "semantic_label": "initializes",
+      "validated": false
+    },
+    {
+      "id": "e_app_task_status_led_gpio_exec_in",
+      "source_node_id": "app_task",
+      "target_node_id": "status_led_gpio",
+      "source_port_id": "app_task_exec_out_2",
+      "target_port_id": "status_led_gpio_exec_in_0",
+      "kind": "execution",
+      "confidence": 0.78,
+      "source_refs": [],
+      "semantic_label": "controls",
+      "validated": false
+    },
+    {
+      "id": "e_ble_manager_app_task_trigger_in",
+      "source_node_id": "ble_manager",
+      "target_node_id": "app_task",
+      "source_port_id": "ble_manager_data_out_2",
+      "target_port_id": "app_task_trigger_in_1",
+      "kind": "event",
+      "confidence": 0.78,
+      "source_refs": [],
+      "semantic_label": "triggers",
+      "validated": false
+    },
+    {
+      "id": "e_app_task_logger_data_in",
+      "source_node_id": "app_task",
+      "target_node_id": "logger",
+      "source_port_id": "app_task_data_out_3",
+      "target_port_id": "logger_data_in_0",
+      "kind": "data",
+      "confidence": 0.78,
+      "source_refs": [],
+      "semantic_label": "data_flow",
+      "validated": false
+    },
+    {
+      "id": "e_app_task__i2c_data_in",
+      "source_node_id": "app_task",
+      "target_node_id": "_i2c",
+      "source_port_id": "app_task_data_out_3",
+      "target_port_id": "_i2c_data_in_1",
+      "kind": "data",
+      "confidence": 0.78,
+      "source_refs": [],
+      "semantic_label": "data_flow",
+      "validated": false
+    },
+    {
+      "id": "e_app_task_ble_manager_data_in",
+      "source_node_id": "app_task",
+      "target_node_id": "ble_manager",
+      "source_port_id": "app_task_data_out_3",
+      "target_port_id": "ble_manager_data_in_1",
+      "kind": "data",
+      "confidence": 0.78,
+      "source_refs": [],
+      "semantic_label": "data_flow",
+      "validated": false
+    }
+  ],
+  "layers": {
+    "physical": [
+      "status_led_gpio",
+      "_i2c"
+    ],
+    "runtime": [
+      "app_task"
+    ],
+    "network": [
+      "ble_manager"
+    ],
+    "system": [
+      "boot",
+      "logger"
+    ]
+  },
+  "partitions": [],
+  "components": [
+    {
+      "id": "main",
+      "path": "main/CMakeLists.txt",
+      "requires": [
+        "esp_driver_gpio",
+        "esp_timer",
+        "esp_wifi",
+        "esp_event",
+        "nvs_flash",
+        "freertos",
+        "log"
+      ],
+      "source_files": []
+    }
+  ],
+  "summary": {
+    "headline": "6 nodes, 9 connections — valid",
+    "node_count": 6,
+    "edge_count": 9,
+    "warnings": [
+      "Cyclic execution path detected involving: boot -> app_task -> ble_manager -> app_task"
+    ]
+  },
+  "diagrams": {
+    "hld": {
+      "title": "High-Level Design",
+      "mermaid": "graph TD\n    hld_esp32[\"ESP32 Main Controller\"]\n    hld_status_led_gpio[\"STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)\"]\n    hld__i2c[\"APP I2C Device\"]\n    hld_ble_manager[\"BLE\"]\n    hld_app_task[\"Task app_task\"]\n    hld_logger[\"Logger\"]\n    hld_esp32 -->|Control Signals| hld_status_led_gpio\n    hld_esp32 -->|Peripheral I/O| hld__i2c\n    hld_esp32 -->|Network Management| hld_ble_manager\n    hld_esp32 -->|Firmware Logic| hld_app_task\n    hld_esp32 -->|Firmware Logic| hld_logger\n    hld_app_task -->|Data Flow| hld__i2c\n    hld_app_task -->|Data Flow| hld_ble_manager\n    hld_app_task -->|Data Flow| hld_logger\n    hld_app_task -->|Control STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)| hld_status_led_gpio\n    hld_ble_manager -->|Forward Sensor Event| hld_app_task"
+    },
+    "lld": {
+      "title": "Low-Level Design (Firmware Workflow)",
+      "mermaid": "flowchart TD\n  subgraph freertos_runtime[\"FreeRTOS\"]\n    app_task[\"Task app_task\"]\n  end\n  status_led_gpio[\"STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)\"]\n  _i2c[\"APP I2C Device\"]\n  ble_manager[\"BLE\"]\n  logger[\"Logger\"]\n  app_task --> _i2c\n  app_task --> ble_manager\n  app_task --> logger\n  app_task --> status_led_gpio\n  ble_manager --> app_task"
+    },
+    "sequence": {
+      "title": "Sequence Diagram",
+      "mermaid": "sequenceDiagram\n    participant boot as 1. Boot / app_main\n    participant app_task as 2. Task app_task\n    participant logger as 3. Logger\n    participant _i2c as 4. APP I2C Device\n    participant ble_manager as 5. BLE\n    participant status_led_gpio as 6. STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)\n    boot->>app_task: spawns\n    boot->>logger: initializes\n    boot->>_i2c: initializes\n    boot->>ble_manager: initializes\n    app_task->>logger: data_flow\n    app_task->>_i2c: data_flow\n    app_task->>ble_manager: data_flow\n    app_task->>status_led_gpio: controls\n    ble_manager->>app_task: triggers",
+      "participants": [
+        "boot",
+        "app_task",
+        "logger",
+        "_i2c",
+        "ble_manager",
+        "status_led_gpio"
+      ],
+      "generated_from": [
+        "main/entry.c",
+        "firmware/configs/app_config.h",
+        "firmware/app/app.c",
+        "firmware/platforms/esp32/ble_mouse.c"
+      ]
+    },
+    "hld_graph": {
+      "schema_version": 1,
+      "id": "pir_air_mouse-hld",
+      "name": "air_mouse topology — HLD",
+      "description": "High-level architecture — MCU controller, firmware modules, and integrations",
+      "nodes": [
+        {
+          "id": "hld_esp32",
+          "node_type": "system_init",
+          "label": "ESP32 Main Controller",
+          "description": "Main firmware control node coordinating peripherals, storage, and connectivity.",
+          "ports": [
+            {
+              "id": "hld_esp32::hld::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "hld_esp32::hld::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "hld_role": "controller"
+          },
+          "visual": {
+            "x": 0.0,
+            "y": -628.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "hld_status_led_gpio",
+          "node_type": "gpio_output",
+          "label": "STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)",
+          "description": "Drives GPIO 48 as an output signal.",
+          "ports": [
+            {
+              "id": "hld_status_led_gpio::hld::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "hld_status_led_gpio::hld::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "pin": 48,
+            "hld_role": "peripheral",
+            "source_node_id": "status_led_gpio"
+          },
+          "hardware": {
+            "gpio": 48,
+            "bus": "gpio",
+            "pin_label": "STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)"
+          },
+          "execution": {},
+          "visual": {
+            "x": 0.0,
+            "y": -364.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "hld__i2c",
+          "node_type": "i2c_device",
+          "label": "APP I2C Device",
+          "description": "Represents an I2C peripheral with mapped bus pins.",
+          "ports": [
+            {
+              "id": "hld__i2c::hld::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "hld__i2c::hld::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "sda_pin": 4,
+            "scl_pin": 5,
+            "address": "0x68",
+            "clock_hz": 400000,
+            "pin_bindings": {
+              "sda": 4,
+              "scl": 5
+            },
+            "hld_role": "peripheral",
+            "source_node_id": "_i2c"
+          },
+          "execution": {},
+          "visual": {
+            "x": 0.0,
+            "y": -100.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "hld_ble_manager",
+          "node_type": "ble_manager",
+          "label": "BLE",
+          "description": "Manages BLE advertising, connections, and data flow.",
+          "ports": [
+            {
+              "id": "hld_ble_manager::hld::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "hld_ble_manager::hld::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "device_name": "ESP32-BLE",
+            "role": "peripheral",
+            "hld_role": "connectivity",
+            "source_node_id": "ble_manager"
+          },
+          "execution": {},
+          "visual": {
+            "x": 0.0,
+            "y": 164.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "hld_app_task",
+          "node_type": "rtos_task",
+          "label": "Task app_task",
+          "description": "Executes RTOS loop logic for app_task.",
+          "ports": [
+            {
+              "id": "hld_app_task::hld::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "hld_app_task::hld::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "task_name": "app_task",
+            "priority": 5,
+            "stack_size": 4096,
+            "period_ms": 10.0,
+            "hld_role": "runtime",
+            "source_node_id": "app_task"
+          },
+          "execution": {
+            "priority": 5,
+            "stack_size": 4096,
+            "period_ms": 10.0
+          },
+          "visual": {
+            "x": 0.0,
+            "y": 428.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "hld_logger",
+          "node_type": "logger",
+          "label": "Logger",
+          "description": "Emits structured runtime logs for diagnostics.",
+          "ports": [
+            {
+              "id": "hld_logger::hld::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "hld_logger::hld::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "tag": "APP",
+            "level": "info",
+            "hld_role": "runtime",
+            "source_node_id": "logger"
+          },
+          "execution": {},
+          "visual": {
+            "x": 430.0,
+            "y": -100.0,
+            "layer": 1
+          }
+        }
+      ],
+      "connections": [
+        [
+          "hld_esp32::hld::out",
+          "hld_status_led_gpio::hld::in"
+        ],
+        [
+          "hld_esp32::hld::out",
+          "hld__i2c::hld::in"
+        ],
+        [
+          "hld_esp32::hld::out",
+          "hld_ble_manager::hld::in"
+        ],
+        [
+          "hld_esp32::hld::out",
+          "hld_app_task::hld::in"
+        ],
+        [
+          "hld_esp32::hld::out",
+          "hld_logger::hld::in"
+        ],
+        [
+          "hld_app_task::hld::out",
+          "hld__i2c::hld::in"
+        ],
+        [
+          "hld_app_task::hld::out",
+          "hld_ble_manager::hld::in"
+        ],
+        [
+          "hld_app_task::hld::out",
+          "hld_logger::hld::in"
+        ],
+        [
+          "hld_app_task::hld::out",
+          "hld_status_led_gpio::hld::in"
+        ],
+        [
+          "hld_ble_manager::hld::out",
+          "hld_app_task::hld::in"
+        ]
+      ],
+      "layout": {
+        "orientation": "horizontal",
+        "node_width": 280.0,
+        "layer_gap": 150.0,
+        "node_gap": 64.0
+      },
+      "runtime_metadata": {
+        "telemetry_enabled": false,
+        "overlays": {
+          "hld_projection": "architecture",
+          "diagram_view": "hld",
+          "hld_edge_labels": {
+            "hld_esp32::hld::out|hld_status_led_gpio::hld::in": "Control Signals",
+            "hld_esp32::hld::out|hld__i2c::hld::in": "Peripheral I/O",
+            "hld_esp32::hld::out|hld_ble_manager::hld::in": "Network Management",
+            "hld_esp32::hld::out|hld_app_task::hld::in": "Firmware Logic",
+            "hld_esp32::hld::out|hld_logger::hld::in": "Firmware Logic",
+            "hld_app_task::hld::out|hld__i2c::hld::in": "Data Flow",
+            "hld_app_task::hld::out|hld_ble_manager::hld::in": "Data Flow",
+            "hld_app_task::hld::out|hld_logger::hld::in": "Data Flow",
+            "hld_app_task::hld::out|hld_status_led_gpio::hld::in": "Control STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)",
+            "hld_ble_manager::hld::out|hld_app_task::hld::in": "Forward Sensor Event"
+          }
+        }
+      }
+    },
+    "lld_graph": {
+      "schema_version": 1,
+      "id": "pir_air_mouse-lld",
+      "name": "air_mouse topology — LLD",
+      "description": "Low-level design — FreeRTOS and peripheral/service workflow",
+      "nodes": [
+        {
+          "id": "app_task",
+          "node_type": "rtos_task",
+          "label": "Task app_task",
+          "description": "Executes RTOS loop logic for app_task.",
+          "ports": [
+            {
+              "id": "app_task::ldd::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "app_task::ldd::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "task_name": "app_task",
+            "priority": 5,
+            "stack_size": 4096,
+            "period_ms": 10.0,
+            "lld_workflow": {
+              "role": "freertos",
+              "node_type": "rtos_task"
+            }
+          },
+          "execution": {
+            "priority": 5,
+            "stack_size": 4096,
+            "period_ms": 10.0
+          },
+          "visual": {
+            "x": -560.0,
+            "y": 0.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "status_led_gpio",
+          "node_type": "gpio_output",
+          "label": "STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)",
+          "description": "Drives GPIO 48 as an output signal.",
+          "ports": [
+            {
+              "id": "status_led_gpio::ldd::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "status_led_gpio::ldd::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "pin": 48,
+            "lld_workflow": {
+              "role": "peripheral",
+              "node_type": "gpio_output"
+            }
+          },
+          "hardware": {
+            "gpio": 48,
+            "bus": "gpio",
+            "pin_label": "STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)"
+          },
+          "execution": {},
+          "visual": {
+            "x": -232.0,
+            "y": 0.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "_i2c",
+          "node_type": "i2c_device",
+          "label": "APP I2C Device",
+          "description": "Represents an I2C peripheral with mapped bus pins.",
+          "ports": [
+            {
+              "id": "_i2c::ldd::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "_i2c::ldd::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "sda_pin": 4,
+            "scl_pin": 5,
+            "address": "0x68",
+            "clock_hz": 400000,
+            "pin_bindings": {
+              "sda": 4,
+              "scl": 5
+            },
+            "lld_workflow": {
+              "role": "peripheral",
+              "node_type": "i2c_device"
+            }
+          },
+          "execution": {},
+          "visual": {
+            "x": 96.0,
+            "y": 0.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "ble_manager",
+          "node_type": "ble_manager",
+          "label": "BLE",
+          "description": "Manages BLE advertising, connections, and data flow.",
+          "ports": [
+            {
+              "id": "ble_manager::ldd::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "ble_manager::ldd::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "device_name": "ESP32-BLE",
+            "role": "peripheral",
+            "lld_workflow": {
+              "role": "service",
+              "node_type": "ble_manager"
+            }
+          },
+          "execution": {},
+          "visual": {
+            "x": 424.0,
+            "y": 0.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "logger",
+          "node_type": "logger",
+          "label": "Logger",
+          "description": "Emits structured runtime logs for diagnostics.",
+          "ports": [
+            {
+              "id": "logger::ldd::in",
+              "name": "assoc_in",
+              "direction": "input",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "logger::ldd::out",
+              "name": "assoc_out",
+              "direction": "output",
+              "datatype": "association",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "tag": "APP",
+            "level": "info",
+            "lld_workflow": {
+              "role": "service",
+              "node_type": "logger"
+            }
+          },
+          "execution": {},
+          "visual": {
+            "x": -140.0,
+            "y": 320.0,
+            "layer": 1
+          }
+        }
+      ],
+      "connections": [
+        [
+          "app_task::ldd::out",
+          "status_led_gpio::ldd::in"
+        ],
+        [
+          "ble_manager::ldd::out",
+          "app_task::ldd::in"
+        ],
+        [
+          "app_task::ldd::out",
+          "logger::ldd::in"
+        ],
+        [
+          "app_task::ldd::out",
+          "_i2c::ldd::in"
+        ],
+        [
+          "app_task::ldd::out",
+          "ble_manager::ldd::in"
+        ]
+      ],
+      "layout": {
+        "orientation": "vertical",
+        "node_width": 280.0,
+        "layer_gap": 120.0,
+        "node_gap": 48.0
+      },
+      "runtime_metadata": {
+        "telemetry_enabled": false,
+        "overlays": {
+          "ldd_edge_labels": {
+            "app_task::ldd::out|status_led_gpio::ldd::in": "controls",
+            "app_task::ldd::out|ble_manager::ldd::in": "data_flow",
+            "ble_manager::ldd::out|app_task::ldd::in": "triggers",
+            "app_task::ldd::out|logger::ldd::in": "data_flow",
+            "app_task::ldd::out|_i2c::ldd::in": "data_flow"
+          },
+          "diagram_view": "ldd"
+        }
+      }
+    },
+    "sequence_graph": {
+      "schema_version": 1,
+      "id": "pir_air_mouse-sequence",
+      "name": "air_mouse topology — Sequence",
+      "description": "Execution and initialization order",
+      "nodes": [
+        {
+          "id": "boot",
+          "node_type": "system_init",
+          "label": "1. Boot / app_main",
+          "description": "Bootstraps firmware startup and initializes core subsystems.",
+          "ports": [
+            {
+              "id": "boot::in",
+              "name": "in",
+              "direction": "input",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "boot::out",
+              "name": "out",
+              "direction": "output",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "target": "esp32s3"
+          },
+          "execution": {},
+          "visual": {
+            "x": 0.0,
+            "y": 80.0,
+            "layer": 0
+          }
+        },
+        {
+          "id": "app_task",
+          "node_type": "rtos_task",
+          "label": "2. Task app_task",
+          "description": "Executes RTOS loop logic for app_task.",
+          "ports": [
+            {
+              "id": "app_task::in",
+              "name": "in",
+              "direction": "input",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "app_task::out",
+              "name": "out",
+              "direction": "output",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "task_name": "app_task",
+            "priority": 5,
+            "stack_size": 4096,
+            "period_ms": 10.0
+          },
+          "execution": {
+            "priority": 5,
+            "stack_size": 4096,
+            "period_ms": 10.0
+          },
+          "visual": {
+            "x": 320.0,
+            "y": 80.0,
+            "layer": 1
+          }
+        },
+        {
+          "id": "logger",
+          "node_type": "logger",
+          "label": "3. Logger",
+          "description": "Emits structured runtime logs for diagnostics.",
+          "ports": [
+            {
+              "id": "logger::in",
+              "name": "in",
+              "direction": "input",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "logger::out",
+              "name": "out",
+              "direction": "output",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "tag": "APP",
+            "level": "info"
+          },
+          "execution": {},
+          "visual": {
+            "x": 640.0,
+            "y": 80.0,
+            "layer": 2
+          }
+        },
+        {
+          "id": "_i2c",
+          "node_type": "i2c_device",
+          "label": "4. APP I2C Device",
+          "description": "Represents an I2C peripheral with mapped bus pins.",
+          "ports": [
+            {
+              "id": "_i2c::in",
+              "name": "in",
+              "direction": "input",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "_i2c::out",
+              "name": "out",
+              "direction": "output",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "sda_pin": 4,
+            "scl_pin": 5,
+            "address": "0x68",
+            "clock_hz": 400000,
+            "pin_bindings": {
+              "sda": 4,
+              "scl": 5
+            }
+          },
+          "execution": {},
+          "visual": {
+            "x": 960.0,
+            "y": 80.0,
+            "layer": 3
+          }
+        },
+        {
+          "id": "ble_manager",
+          "node_type": "ble_manager",
+          "label": "5. BLE",
+          "description": "Manages BLE advertising, connections, and data flow.",
+          "ports": [
+            {
+              "id": "ble_manager::in",
+              "name": "in",
+              "direction": "input",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "ble_manager::out",
+              "name": "out",
+              "direction": "output",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "device_name": "ESP32-BLE",
+            "role": "peripheral"
+          },
+          "execution": {},
+          "visual": {
+            "x": 1280.0,
+            "y": 80.0,
+            "layer": 4
+          }
+        },
+        {
+          "id": "status_led_gpio",
+          "node_type": "gpio_output",
+          "label": "6. STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)",
+          "description": "Drives GPIO 48 as an output signal.",
+          "ports": [
+            {
+              "id": "status_led_gpio::in",
+              "name": "in",
+              "direction": "input",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            },
+            {
+              "id": "status_led_gpio::out",
+              "name": "out",
+              "direction": "output",
+              "datatype": "any",
+              "required": false,
+              "multiplicity": "one"
+            }
+          ],
+          "properties": {
+            "pin": 48
+          },
+          "hardware": {
+            "gpio": 48,
+            "bus": "gpio",
+            "pin_label": "STATUS LED GPIO (GPIO 48, APP_STATUS_LED_GPIO)"
+          },
+          "execution": {},
+          "visual": {
+            "x": 1600.0,
+            "y": 80.0,
+            "layer": 5
+          }
+        }
+      ],
+      "connections": [
+        [
+          "boot::out",
+          "app_task::in"
+        ],
+        [
+          "boot::out",
+          "logger::in"
+        ],
+        [
+          "boot::out",
+          "_i2c::in"
+        ],
+        [
+          "boot::out",
+          "ble_manager::in"
+        ],
+        [
+          "app_task::out",
+          "logger::in"
+        ],
+        [
+          "app_task::out",
+          "_i2c::in"
+        ],
+        [
+          "app_task::out",
+          "ble_manager::in"
+        ],
+        [
+          "app_task::out",
+          "status_led_gpio::in"
+        ],
+        [
+          "ble_manager::out",
+          "app_task::in"
+        ]
+      ],
+      "layout": {
+        "orientation": "horizontal",
+        "node_width": 0.0,
+        "layer_gap": 0.0,
+        "node_gap": 0.0
+      }
+    }
+  },
+  "change_log": [],
+  "unresolved": [],
+  "read_only": false,
+  "graph_version": 1,
+  "generation": {
+    "mode": "static",
+    "triggered_by": "mount",
+    "analyzed_at_ms": 1786183916022,
+    "input_files": [
+      "CMakeLists.txt",
+      "firmware/app/app.c",
+      "firmware/app/app.h",
+      "firmware/configs/app_config.h",
+      "firmware/configs/build_config.h",
+      "firmware/configs/platform_config.h",
+      "firmware/interfaces/motion_sensor_if.h",
+      "firmware/interfaces/mouse_output_if.h",
+      "firmware/platforms/esp32/ble_mouse.c",
+      "firmware/platforms/esp32/mpu6050.c",
+      "firmware/utils/helpers/helpers.c",
+      "firmware/utils/helpers/helpers.h",
+      "firmware/utils/logger/logger.c",
+      "firmware/utils/logger/logger.h",
+      "main/CMakeLists.txt",
+      "main/entry.c",
+      "main/firmgen_sources.cmake",
+      "sdkconfig",
+      "sdkconfig.defaults"
+    ]
+  },
+  "sync_metadata": {
+    "project_file": "",
+    "content_hash": "",
+    "pending_patches": []
+  },
+  "validation_state": {
+    "valid": true,
+    "error_count": 0,
+    "warning_count": 1,
+    "validated_at_ms": 1786183916022
+  }
+}

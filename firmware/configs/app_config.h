@@ -1,0 +1,18 @@
+#ifndef APP_CONFIG_H
+#define APP_CONFIG_H
+
+#define SDA_PIN 1
+#define SCL_PIN 2
+#define APP_I2C_SDA_GPIO SDA_PIN
+#define APP_I2C_SCL_GPIO SCL_PIN
+#define APP_I2C_FREQ_HZ 400000
+#define APP_MPU6050_ADDRESS 0x68
+#define APP_MPU6050_WHO_AM_I 0x75
+#define APP_SAMPLE_PERIOD_MS 25
+#define APP_MOUSE_SCALE 2.2f
+#define APP_MOUSE_DEADZONE 1.0f
+#define APP_MOUSE_MAX_DELTA 127
+#define APP_BLE_NAME "ESP32 Air Mouse"
+#define APP_QUIET_STARTUP 1
+
+#endif

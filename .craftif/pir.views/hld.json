@@ -1,0 +1,310 @@
+{
+  "schema_version": "1.0.0",
+  "view": "hld",
+  "revision": "00e39d3d0c9f23d022f7abf175011b30",
+  "graph_version": 4,
+  "generated_at_ms": 1786188809676,
+  "graph": {
+    "schema_version": 1,
+    "id": "pir_air_mouse-hld",
+    "name": "air_mouse topology — HLD",
+    "description": "High-level architecture — MCU controller, firmware modules, and integrations",
+    "nodes": [
+      {
+        "id": "hld_esp32",
+        "node_type": "system_init",
+        "label": "ESP32 Main Controller",
+        "description": "Main firmware control node coordinating peripherals, storage, and connectivity.",
+        "ports": [
+          {
+            "id": "hld_esp32::hld::in",
+            "name": "assoc_in",
+            "direction": "input",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "hld_esp32::hld::out",
+            "name": "assoc_out",
+            "direction": "output",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "hld_role": "controller"
+        },
+        "visual": {
+          "x": 0.0,
+          "y": -628.0,
+          "layer": 0
+        }
+      },
+      {
+        "id": "hld__i2c",
+        "node_type": "i2c_device",
+        "label": "APP I2C Device",
+        "description": "Represents an I2C peripheral with mapped bus pins.",
+        "ports": [
+          {
+            "id": "hld__i2c::hld::in",
+            "name": "assoc_in",
+            "direction": "input",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "hld__i2c::hld::out",
+            "name": "assoc_out",
+            "direction": "output",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "sda_pin": 21,
+          "scl_pin": 22,
+          "address": "0x68",
+          "clock_hz": 400000,
+          "hld_role": "peripheral",
+          "source_node_id": "_i2c"
+        },
+        "execution": {},
+        "visual": {
+          "x": 0.0,
+          "y": -364.0,
+          "layer": 0
+        }
+      },
+      {
+        "id": "hld_storage_manager",
+        "node_type": "storage_manager",
+        "label": "Storage Manager",
+        "description": "Persists runtime state and configuration data.",
+        "ports": [
+          {
+            "id": "hld_storage_manager::hld::in",
+            "name": "assoc_in",
+            "direction": "input",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "hld_storage_manager::hld::out",
+            "name": "assoc_out",
+            "direction": "output",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "backend": "nvs",
+          "namespace": "app",
+          "hld_role": "storage",
+          "source_node_id": "storage_manager"
+        },
+        "execution": {},
+        "visual": {
+          "x": 0.0,
+          "y": -100.0,
+          "layer": 0
+        }
+      },
+      {
+        "id": "hld_ble_manager",
+        "node_type": "ble_manager",
+        "label": "BLE",
+        "description": "Manages BLE advertising, connections, and data flow.",
+        "ports": [
+          {
+            "id": "hld_ble_manager::hld::in",
+            "name": "assoc_in",
+            "direction": "input",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "hld_ble_manager::hld::out",
+            "name": "assoc_out",
+            "direction": "output",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "device_name": "ESP32-BLE",
+          "role": "peripheral",
+          "hld_role": "connectivity",
+          "source_node_id": "ble_manager"
+        },
+        "execution": {},
+        "visual": {
+          "x": 0.0,
+          "y": 164.0,
+          "layer": 0
+        }
+      },
+      {
+        "id": "hld_app_task",
+        "node_type": "rtos_task",
+        "label": "Task app_task",
+        "description": "Executes RTOS loop logic for app_task.",
+        "ports": [
+          {
+            "id": "hld_app_task::hld::in",
+            "name": "assoc_in",
+            "direction": "input",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "hld_app_task::hld::out",
+            "name": "assoc_out",
+            "direction": "output",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "task_name": "app_task",
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 25.0,
+          "hld_role": "runtime",
+          "source_node_id": "app_task"
+        },
+        "execution": {
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 25.0
+        },
+        "visual": {
+          "x": 0.0,
+          "y": 428.0,
+          "layer": 0
+        }
+      },
+      {
+        "id": "hld_motion",
+        "node_type": "rtos_task",
+        "label": "Task motion",
+        "description": "Executes RTOS loop logic for motion.",
+        "ports": [
+          {
+            "id": "hld_motion::hld::in",
+            "name": "assoc_in",
+            "direction": "input",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          },
+          {
+            "id": "hld_motion::hld::out",
+            "name": "assoc_out",
+            "direction": "output",
+            "datatype": "association",
+            "required": false,
+            "multiplicity": "one"
+          }
+        ],
+        "properties": {
+          "task_name": "motion",
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 0.0,
+          "hld_role": "runtime",
+          "source_node_id": "motion"
+        },
+        "execution": {
+          "priority": 5,
+          "stack_size": 4096,
+          "period_ms": 0.0
+        },
+        "visual": {
+          "x": 430.0,
+          "y": -100.0,
+          "layer": 1
+        }
+      }
+    ],
+    "connections": [
+      [
+        "hld_esp32::hld::out",
+        "hld__i2c::hld::in"
+      ],
+      [
+        "hld_esp32::hld::out",
+        "hld_storage_manager::hld::in"
+      ],
+      [
+        "hld_esp32::hld::out",
+        "hld_ble_manager::hld::in"
+      ],
+      [
+        "hld_esp32::hld::out",
+        "hld_app_task::hld::in"
+      ],
+      [
+        "hld_esp32::hld::out",
+        "hld_motion::hld::in"
+      ],
+      [
+        "hld_app_task::hld::out",
+        "hld__i2c::hld::in"
+      ],
+      [
+        "hld_app_task::hld::out",
+        "hld_ble_manager::hld::in"
+      ],
+      [
+        "hld_app_task::hld::out",
+        "hld_storage_manager::hld::in"
+      ],
+      [
+        "hld_ble_manager::hld::out",
+        "hld_app_task::hld::in"
+      ],
+      [
+        "hld_ble_manager::hld::out",
+        "hld_motion::hld::in"
+      ]
+    ],
+    "layout": {
+      "orientation": "horizontal",
+      "node_width": 280.0,
+      "layer_gap": 150.0,
+      "node_gap": 64.0
+    },
+    "runtime_metadata": {
+      "telemetry_enabled": false,
+      "overlays": {
+        "hld_edge_labels": {
+          "hld_esp32::hld::out|hld__i2c::hld::in": "Peripheral I/O",
+          "hld_esp32::hld::out|hld_storage_manager::hld::in": "Read / Write Config",
+          "hld_esp32::hld::out|hld_ble_manager::hld::in": "Network Management",
+          "hld_esp32::hld::out|hld_app_task::hld::in": "Firmware Logic",
+          "hld_esp32::hld::out|hld_motion::hld::in": "Firmware Logic",
+          "hld_app_task::hld::out|hld__i2c::hld::in": "Data Flow",
+          "hld_app_task::hld::out|hld_ble_manager::hld::in": "Data Flow",
+          "hld_app_task::hld::out|hld_storage_manager::hld::in": "Data Flow",
+          "hld_ble_manager::hld::out|hld_app_task::hld::in": "Forward Sensor Event",
+          "hld_ble_manager::hld::out|hld_motion::hld::in": "Forward Sensor Event"
+        },
+        "diagram_view": "hld",
+        "hld_projection": "architecture"
+      }
+    }
+  },
+  "mermaid": "graph TD\n    hld_esp32[\"ESP32 Main Controller\"]\n    hld__i2c[\"APP I2C Device\"]\n    hld_storage_manager[\"Storage Manager\"]\n    hld_ble_manager[\"BLE\"]\n    hld_app_task[\"Task app_task\"]\n    hld_motion[\"Task motion\"]\n    hld_esp32 -->|Peripheral I/O| hld__i2c\n    hld_esp32 -->|Read / Write Config| hld_storage_manager\n    hld_esp32 -->|Network Management| hld_ble_manager\n    hld_esp32 -->|Firmware Logic| hld_app_task\n    hld_esp32 -->|Firmware Logic| hld_motion\n    hld_app_task -->|Data Flow| hld__i2c\n    hld_app_task -->|Data Flow| hld_ble_manager\n    hld_app_task -->|Data Flow| hld_storage_manager\n    hld_ble_manager -->|Forward Sensor Event| hld_app_task\n    hld_ble_manager -->|Forward Sensor Event| hld_motion",
+  "title": "High-Level Design"
+}
