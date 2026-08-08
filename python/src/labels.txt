@@ -1,6 +1,0 @@
-1: wave
-2: hand shake (data recordings are not really good)
-3: draw circle (left and right)
-4: arm raised
-5: arm raised or lowered for drinking
-6: arm resting

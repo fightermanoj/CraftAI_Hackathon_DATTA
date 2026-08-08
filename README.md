@@ -1,51 +1,60 @@
-# Local Gesture Detection NN on Esp32
+# ♿ Assistive Web Accessibility Wearable Interface
 
-This project lets you record gestures with an ESP32, train them in PyTorch, and run them back on device using a custom neural network I wrote. It’s designed to be flexible, so you can easily train and swap your own gestures without ever having to hardcode a single movement.
+> **Hackathon Pitch:** *"75 million people globally cannot use a traditional keyboard or mouse due to ALS, cerebral palsy, spinal cord injuries, or stroke recovery. We built their complete computer access lifeline in 2 hours using **FirmGen**."*
 
-## ⚙️ How it works
+An all-in-one wearable assistive technology device designed to provide complete, hands-free **Web Accessibility**. It combines an **MPU6050 Motion-based Bluetooth BLE Air Mouse** with **Offline ESP Voice Command Recognition** (ICS-43434 I2S Microphone) and **GPIO 48 WS2812 RGB Visual Feedback**.
 
-The workflow is split into three steps:
+---
 
-1. **Record**: Use the ESP32 and an accelerometer to capture movements. Data is sent over Serial and manually saved to a CSV.
-2. **Train**: Run the Python scripts to process your data and train a PyTorch model.
-3. **Deploy**: The script exports the model weights and biases as a C++ header file. Copy this back to your ESP32 to start recognizing gestures.
+## 🚀 What FirmGen Generated
 
-## 🧠 The Neural Network
+*I described my hardware pinouts and desired behavior to **FirmGen**, which generated the production-grade ESP-IDF / Arduino firmware:*
 
-The model is a simple feedforward network. I built the C++ implementation to mirror the PyTorch architecture exactly so the weights can be dropped right in.
+1. **MPU6050 I2C Driver & Filter Layer**: Hardware initialization on GPIO 1 (SDA) & GPIO 2 (SCL), I2C communication, complementary filter math, and hand-tremor deadzone protection for smooth 2D cursor control.
+2. **BLE HID Mouse Profile**: Complete GATT server configuration, HID report descriptors, mouse report structures, and seamless Bluetooth Low Energy pairing.
+3. **I2S DMA Audio Capture Pipeline**: ICS-43434 / IM69D130 I2S digital microphone driver setup on GPIO 16 (BCLK), 17 (WS), 18 (DIN), 24-bit audio normalization, and real-time audio amplitude/pitch processing.
+4. **Offline ESP Voice Command Recognition**: Pre-trained offline acoustic command parser mapping voice triggers directly to web accessibility actions (**Left Click**, **Right Click**, **Double Click**, and **Scroll Down**).
+5. **Real-Time RGB LED Feedback**: WS2812 RGB LED controller on GPIO 48 providing live voice volume flickering (RED) and state-machine indication.
+6. **FreeRTOS Task Architecture**: Multi-task orchestration (`TaskBLEMotion` at 50Hz and `TaskVoiceCommand` at 100Hz) ensuring concurrent motion tracking, audio capture, and BLE data transmission without latency.
 
-- **Labels**: Currently set up for 4 custom gestures.
-- **Performance**: Optimized to run fast on ESP32 hardware without heavy libraries.
-- **Dependency**: This is based on my [Neural Network from scratch on ESP32/Arduino](https://github.com/FrozenAssassine/NeuralNetwork-Arduino).
+---
 
-Consists of:
-- Input Layer (13 neurons): Accepts raw accelerometer features.
-- Hidden Layer (32 neurons): Processes complex movement patterns with ReLU activation.
-- Output Layer (4 neurons): Produces probability scores for each gesture using Softmax.
+## ⚡ Hardware Wiring Pinout
 
-## 🏗️ Quick Start
+| Module / Sensor | Signal | ESP32 GPIO Pin | Function |
+|---|---|---|---|
+| **MPU6050 IMU** | `SDA` | **GPIO 1** | I2C Data Line (Wrist / Head Motion) |
+| **MPU6050 IMU** | `SCL` | **GPIO 2** | I2C Clock Line |
+| **MPU6050 IMU** | `VCC` / `GND` | `3.3V` / `GND` | Power Supply |
+| **ICS-43434 Mic** | `BCLK` | **GPIO 16** | I2S Bit Clock |
+| **ICS-43434 Mic** | `WS` | **GPIO 17** | I2S Word Select (Frame Sync) |
+| **ICS-43434 Mic** | `DIN` / `SD` | **GPIO 18** | I2S Data Input |
+| **ICS-43434 Mic** | `L/R` | `GND` | Left Channel Select |
+| **ICS-43434 Mic** | `VDD` / `GND` | `3.3V` / `GND` | Power Supply |
+| **WS2812 RGB LED** | `DATA` | **GPIO 48** | Visual RGB Status Indicator |
 
-### 1. Data Collection
+---
 
-Flash the main.cpp and open your Serial monitor. Move the sensor, label your gestures, and save the output into your data file. The more data the better the accuracy. Aim for more than 20 recordings per gesture for best results! Press p in the serial console to print the csv and copy it into the data.csv file.
+## 🎨 Visual RGB Status Matrix (GPIO 48)
 
-### 2. Training
+| System State / Voice Trigger | LED Visual Effect | Meaning |
+|---|---|---|
+| **Speaking into Mic** | 🔴 **Dynamic RED Flicker** | Real-time voice audio capture indicator |
+| **Bluetooth Pairing** | 🟦 **Blue Pulse** | Advertising BLE "Assistive Air Mouse" |
+| **Connected & Active** | 🟦 **Solid Blue** | Bluetooth connected & motion active |
+| **Single Voice Trigger** | 🟩 **Green Flash** | Executed **Left Click** |
+| **Double Voice Trigger** | 🩵 **Cyan Flash** | Executed **Double Click** |
+| **Sustained Voice (>500ms)** | 🟪 **Purple Flash** | Executed **Right Click** |
+| **High Pitch Voice** | 🟧 **Orange Flash** | Executed **Scroll Down** |
 
-Run the training script (main.py) in the Python folder. This will:
+---
 
-- Read your recordings.
-- Train the model.
+## 🛠️ How to Build & Flash
 
-### 3. Model conversion
-
-Run the script, that converts the torch model to the esp32 model header file.
-
-- Run make_esp_model.py
-- Copy the nn_trained into the include folder inside the firmware folder.
-
-### 4. Inference
-
-In the main.cpp, set the recordingMode to false and flash the code. Open the Serial monitor, press enter, perform a movement, and the ESP32 will tell you what gesture it detected.
-
-## 📷 Prediction 
-<img width="561" height="258" alt="image" src="https://github.com/user-attachments/assets/63069c87-d693-4a16-91d9-b99ede0ee0ef" />
+### Using PlatformIO
+1. Open this directory in PlatformIO / VS Code.
+2. Flash the firmware to your ESP32-S3 board:
+   ```powershell
+   & 'C:\Users\GuruKrupa\.platformio\penv\Scripts\pio.exe' run -d "C:\Users\GuruKrupa\Downloads\firmgen" --target upload
+   ```
+3. Connect via Bluetooth on your PC, Mac, or Smartphone to **`Assistive Air Mouse`**.
