@@ -47,14 +47,4 @@ An all-in-one wearable assistive technology device designed to provide complete,
 | **MultiNet v7** | `"increase volume"` | **Scroll Up** | 🟧 **Flash Orange** |
 | **MultiNet v7** | `"decrease volume"` | **Scroll Down** | 🩷 **Flash Pink / Magenta** |
 
----
 
-## 🛠️ How to Build & Flash
-
-### Using PlatformIO
-1. Open this directory in PlatformIO / VS Code.
-2. Flash the firmware to your ESP32-S3 board:
-   ```powershell
-   & 'C:\Users\GuruKrupa\.platformio\penv\Scripts\pio.exe' run -d "C:\Users\GuruKrupa\Downloads\firmgen" --target upload
-   ```
-3. Connect via Bluetooth on your PC, Mac, or Smartphone to **`Assistive Air Mouse`**.

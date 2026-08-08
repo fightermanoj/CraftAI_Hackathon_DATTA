@@ -34,9 +34,10 @@ private:
     bool inPulse;
     int pulseCount;
     float maxEnergy;
+    float noiseFloor;
 
 public:
-    I2SVoiceProcessor() : isRunning(false), pulseStartTime(0), lastPulseEndTime(0), inPulse(false), pulseCount(0), maxEnergy(0.0f), lastIntensity(0) {}
+    I2SVoiceProcessor() : isRunning(false), pulseStartTime(0), lastPulseEndTime(0), inPulse(false), pulseCount(0), maxEnergy(0.0f), lastIntensity(0), noiseFloor(0.002f) {}
 
     uint8_t getLastIntensity() const {
         return lastIntensity;
@@ -111,41 +112,51 @@ public:
         }
 
         float rms = sqrt(sumSq / samplesCount);
+
+        // Adaptive noise floor calculation
+        if (rms < noiseFloor * 1.5f) {
+            noiseFloor = (noiseFloor * 0.95f) + (rms * 0.05f);
+            if (noiseFloor < 0.001f) noiseFloor = 0.001f;
+        }
+
+        float speechThreshold = noiseFloor * 2.8f;
+        if (speechThreshold < 0.004f) speechThreshold = 0.004f;
         
         // Calculate dynamic RED LED brightness intensity (0 - 255) based on real-time voice volume
-        float scaledVol = rms * 2500.0f; // Amplification factor for visual flicker
+        float scaledVol = (rms / (speechThreshold * 2.5f)) * 255.0f;
         if (scaledVol > 255.0f) scaledVol = 255.0f;
         lastIntensity = (uint8_t)scaledVol;
-
-        float threshold = 0.005f; // Highly sensitive voice activity threshold
 
         unsigned long now = millis();
         VoiceCommandType detectedCmd = VOICE_CMD_NONE;
 
-        if (rms > threshold) {
+        if (rms > speechThreshold) {
             if (!inPulse) {
                 inPulse = true;
                 pulseStartTime = now;
                 maxEnergy = rms;
             } else {
                 if (rms > maxEnergy) maxEnergy = rms;
+
+                // Real-time sustained long voice trigger (>450ms continuous sound) -> RIGHT CLICK
+                if (now - pulseStartTime > 450) {
+                    detectedCmd = VOICE_CMD_RIGHT_CLICK;
+                    inPulse = false; // Reset pulse state
+                    pulseStartTime = now + 500; // Cooldown to avoid rapid repeated triggers
+                    pulseCount = 0;
+                }
             }
         } else {
             if (inPulse) {
                 inPulse = false;
                 unsigned long duration = now - pulseStartTime;
                 
-                if (duration >= 60) { // Valid voice pulse (>60ms)
+                if (duration >= 50 && duration < 450) { // Valid distinct voice pulse (50ms - 450ms)
                     pulseCount++;
                     lastPulseEndTime = now;
 
-                    // Sustained long voice command (>500ms) -> Right Click
-                    if (duration > 500) {
-                        detectedCmd = VOICE_CMD_RIGHT_CLICK;
-                        pulseCount = 0;
-                    }
-                    // High zero crossing rate (high pitch audio) -> Scroll Down
-                    else if (zeroCrossings > 70) {
+                    // High zero crossing rate (high pitch / sibilant audio) -> Scroll Down
+                    if (zeroCrossings > 65) {
                         detectedCmd = VOICE_CMD_SCROLL_DOWN;
                         pulseCount = 0;
                     }
@@ -153,8 +164,8 @@ public:
             }
         }
 
-        // Multi-pulse command evaluator window (300ms timeout)
-        if (pulseCount > 0 && !inPulse && (now - lastPulseEndTime > 300)) {
+        // Multi-pulse command evaluator window (250ms timeout)
+        if (pulseCount > 0 && !inPulse && (now - lastPulseEndTime > 250)) {
             if (pulseCount == 1) {
                 detectedCmd = VOICE_CMD_LEFT_CLICK;
             } else if (pulseCount >= 2) {
