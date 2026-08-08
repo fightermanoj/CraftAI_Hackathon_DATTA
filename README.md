@@ -6,6 +6,20 @@ An all-in-one wearable assistive technology device designed to provide complete,
 
 ---
 
+## 💥 Impact
+
+**75M people can't use a keyboard. This is their replacement.**
+
+* 💵 **$10 Hardware**: Existing assistive mice cost $500+.
+* ⚡ **Zero Install**: Standard Bluetooth HID, works on any PC, Mac, Android, or iOS device natively.
+* 🔒 **Offline Voice**: No cloud, no WiFi required, zero privacy leaks.
+* 🎯 **Tremor-Safe**: Exponential filter cleans involuntary hand tremors and extracts true motion intent.
+* 🎙️ **Voice = Clicks**: Speak to left-click, right-click, double-click, and scroll seamlessly.
+* 🎨 **RGB Feedback**: Instant visual confirmation light for every voice command and mic input.
+* 🚀 **Built in 2 Hours with FirmGen**: Months of complex embedded firmware engineering, collapsed into 2 hours.
+
+---
+
 ## 🚀 What FirmGen Generated
 
 *I described my hardware pinouts and desired behavior to **FirmGen**, which generated the production-grade ESP-IDF firmware:*
@@ -47,4 +61,20 @@ An all-in-one wearable assistive technology device designed to provide complete,
 | **MultiNet v7** | `"increase volume"` | **Scroll Up** | 🟧 **Flash Orange** |
 | **MultiNet v7** | `"decrease volume"` | **Scroll Down** | 🩷 **Flash Pink / Magenta** |
 
+---
 
+## 📹 Video Demonstration
+
+Check out the full video demonstration and hardware walk-through:
+🔗 **[Watch Hardware & Firmware Video Demo on Google Drive](https://drive.google.com/drive/folders/1w-h7adIn-JvgCB0AcG4T-cyu8TiBb393)**
+
+---
+
+## 🔮 Future Aspects: Adaptive Assistive HMI
+
+To expand this project into a comprehensive **Adaptive Assistive Human-Machine Interface (HMI)** for the disabled population:
+
+1. **On-Device Adaptive Intent Calibration**: Implement real-time continuous recalibration to automatically adjust gyro deadzones and voice sensitivity based on progressive motor conditions (e.g. advanced ALS or muscle fatigue).
+2. **Multi-Sensor Fusion & Eye-Gaze Integration**: Integrate optical eye-gaze tracking and EMG muscle-impulse triggers for ventilator-dependent and non-verbal users.
+3. **Multi-Lingual Offline Command Engine**: Expand offline ESP-SR MultiNet dictionary to support 15+ global languages natively without cloud dependency.
+4. **Universal Assistive Accessibility Ecosystem**: Build open-source modular firmware extensions so any assistive hardware manufacturer can deploy custom wearable accessibility devices using FirmGen in minutes.
