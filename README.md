@@ -35,17 +35,17 @@ An all-in-one wearable assistive technology device designed to provide complete,
 
 ---
 
-## 🎨 Visual RGB Status Matrix (GPIO 48)
+## 🎨 ESP-SR / MultiNet Voice Commands & RGB LED Feedback (GPIO 48)
 
-| System State / Voice Trigger | LED Visual Effect | Meaning |
-|---|---|---|
-| **Speaking into Mic** | 🔴 **Dynamic RED Flicker** | Real-time voice audio capture indicator |
-| **Bluetooth Pairing** | 🟦 **Blue Pulse** | Advertising BLE "Assistive Air Mouse" |
-| **Connected & Active** | 🟦 **Solid Blue** | Bluetooth connected & motion active |
-| **Single Voice Trigger** | 🟩 **Green Flash** | Executed **Left Click** |
-| **Double Voice Trigger** | 🩵 **Cyan Flash** | Executed **Double Click** |
-| **Sustained Voice (>500ms)** | 🟪 **Purple Flash** | Executed **Right Click** |
-| **High Pitch Voice** | 🟧 **Orange Flash** | Executed **Scroll Down** |
+| ESP-SR Module | Recognized Voice Command | Action Executed | LED Visual Effect |
+|---|---|---|---|
+| **Live Audio Input** | Speaking into Mic | Real-Time Mic Feedback | 🔴 **Dynamic RED Volume Flicker** |
+| **WakeNet Engine** | `"Hi ESP"` / `"Alexa"` | Hands-Free Wake Trigger | 🟨 **Solid Yellow / Amber** |
+| **MultiNet v7** | `"turn on the light"` / `"turn on"` | **Left Click** | 🟩 **Flash Bright Green** |
+| **MultiNet v7** | `"turn off the light"` / `"turn off"` | **Right Click** | 🟪 **Flash Bright Purple** |
+| **MultiNet v7** | `"play music"` / `"stop playing"` | **Double Click** | 🩵 **Flash Cyan** |
+| **MultiNet v7** | `"increase volume"` | **Scroll Up** | 🟧 **Flash Orange** |
+| **MultiNet v7** | `"decrease volume"` | **Scroll Down** | 🩷 **Flash Pink / Magenta** |
 
 ---
 

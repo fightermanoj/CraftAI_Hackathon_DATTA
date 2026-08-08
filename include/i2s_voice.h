@@ -15,11 +15,12 @@
 
 enum VoiceCommandType {
     VOICE_CMD_NONE,
-    VOICE_CMD_LEFT_CLICK,
-    VOICE_CMD_RIGHT_CLICK,
-    VOICE_CMD_DOUBLE_CLICK,
-    VOICE_CMD_SCROLL_DOWN,
-    VOICE_CMD_SCROLL_UP
+    VOICE_CMD_WAKE_WORD,    // ESP-SR WakeNet: "Hi ESP", "Alexa"
+    VOICE_CMD_LEFT_CLICK,   // ESP-SR MultiNet: "turn on the light" / "turn on"
+    VOICE_CMD_RIGHT_CLICK,  // ESP-SR MultiNet: "turn off the light" / "turn off"
+    VOICE_CMD_DOUBLE_CLICK, // ESP-SR MultiNet: "play music" / "stop playing"
+    VOICE_CMD_SCROLL_DOWN,  // ESP-SR MultiNet: "decrease volume"
+    VOICE_CMD_SCROLL_UP     // ESP-SR MultiNet: "increase volume"
 };
 
 class I2SVoiceProcessor {

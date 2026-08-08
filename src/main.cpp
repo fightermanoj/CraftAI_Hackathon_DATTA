@@ -49,22 +49,28 @@ void TaskVoiceCommand(void *pvParameters) {
 
         if (cmd != VOICE_CMD_NONE && bleMouse.isConnected()) {
             switch (cmd) {
+                case VOICE_CMD_WAKE_WORD:
+                    Serial.println("[ESP-SR WakeNet] Wake Word Recognized ('Hi ESP' / 'Alexa')!");
+                    rgbLed.setState(LED_STATE_LISTENING); // Yellow LED Active Listening
+                    vTaskDelay(pdMS_TO_TICKS(400));
+                    break;
+
                 case VOICE_CMD_LEFT_CLICK:
-                    Serial.println("[Voice Command] Executing LEFT CLICK!");
+                    Serial.println("[ESP-SR MultiNet] Command Recognized: 'turn on the light' -> Executing LEFT CLICK!");
                     bleMouse.click(MOUSE_LEFT);
                     rgbLed.setState(LED_STATE_LEFT_CLICK); // Flash Green
                     vTaskDelay(pdMS_TO_TICKS(300));
                     break;
 
                 case VOICE_CMD_RIGHT_CLICK:
-                    Serial.println("[Voice Command] Executing RIGHT CLICK!");
+                    Serial.println("[ESP-SR MultiNet] Command Recognized: 'turn off the light' -> Executing RIGHT CLICK!");
                     bleMouse.click(MOUSE_RIGHT);
                     rgbLed.setState(LED_STATE_RIGHT_CLICK); // Flash Purple
                     vTaskDelay(pdMS_TO_TICKS(300));
                     break;
 
                 case VOICE_CMD_DOUBLE_CLICK:
-                    Serial.println("[Voice Command] Executing DOUBLE CLICK!");
+                    Serial.println("[ESP-SR MultiNet] Command Recognized: 'play music' -> Executing DOUBLE CLICK!");
                     bleMouse.click(MOUSE_LEFT);
                     vTaskDelay(pdMS_TO_TICKS(100));
                     bleMouse.click(MOUSE_LEFT);
@@ -73,14 +79,14 @@ void TaskVoiceCommand(void *pvParameters) {
                     break;
 
                 case VOICE_CMD_SCROLL_DOWN:
-                    Serial.println("[Voice Command] Executing SCROLL DOWN!");
+                    Serial.println("[ESP-SR MultiNet] Command Recognized: 'decrease volume' -> Executing SCROLL DOWN!");
                     bleMouse.move(0, 0, -3); // Scroll wheel down
                     rgbLed.setState(LED_STATE_SCROLL_DOWN); // Flash Magenta
                     vTaskDelay(pdMS_TO_TICKS(300));
                     break;
 
                 case VOICE_CMD_SCROLL_UP:
-                    Serial.println("[Voice Command] Executing SCROLL UP!");
+                    Serial.println("[ESP-SR MultiNet] Command Recognized: 'increase volume' -> Executing SCROLL UP!");
                     bleMouse.move(0, 0, 3); // Scroll wheel up
                     rgbLed.setState(LED_STATE_SCROLL_UP); // Flash Orange
                     vTaskDelay(pdMS_TO_TICKS(300));
