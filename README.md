@@ -8,7 +8,7 @@ An all-in-one wearable assistive technology device designed to provide complete,
 
 ## 🚀 What FirmGen Generated
 
-*I described my hardware pinouts and desired behavior to **FirmGen**, which generated the production-grade ESP-IDF / Arduino firmware:*
+*I described my hardware pinouts and desired behavior to **FirmGen**, which generated the production-grade ESP-IDF firmware:*
 
 1. **MPU6050 I2C Driver & Filter Layer**: Hardware initialization on GPIO 1 (SDA) & GPIO 2 (SCL), I2C communication, complementary filter math, and hand-tremor deadzone protection for smooth 2D cursor control.
 2. **BLE HID Mouse Profile**: Complete GATT server configuration, HID report descriptors, mouse report structures, and seamless Bluetooth Low Energy pairing.
