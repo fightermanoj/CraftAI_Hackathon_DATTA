@@ -1,4 +1,4 @@
-# ♿ Assistive Web Accessibility Wearable Interface
+# ♿ DATTA — Digital Assistive Technology for Touch-free Access
 
 > **Hackathon Pitch:** *"75 million people globally cannot use a traditional keyboard or mouse due to ALS, cerebral palsy, spinal cord injuries, or stroke recovery. We built their complete computer access lifeline in 2 hours using **FirmGen**."*
 
